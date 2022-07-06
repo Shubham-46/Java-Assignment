@@ -1,0 +1,45 @@
+package com.question6;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Scanner;
+
+import com.mysql.cj.protocol.Resultset;
+
+public class Demo4 {
+	
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.out.println("problem with loding the driver main class");
+		}
+		
+		String cs = "jdbc:mysql://localhost:3306/jdbc";
+		
+		try {
+		 Connection conn= DriverManager.getConnection(cs,"root","Shristy@1640");	
+
+		 Statement st= conn.createStatement();
+		 String query="Select * from employee where salary<80000";
+		 ResultSet rs=st.executeQuery(query); 
+		 System.out.println("eid  name  address salary");
+		 while(rs.next()) {
+			 int id = rs.getInt("eid");
+	         String name = rs.getString("name");
+	         String address = rs.getString("address");
+	         String salary = rs.getString("salary");
+	         System.out.println(id+"   "+name+"    "+address+"  "+salary);
+		 }
+		 
+		}catch(SQLException ex) {
+			ex.printStackTrace();
+		}
+	}
+}
